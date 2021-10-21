@@ -1,0 +1,67 @@
+version: '2'
+services:
+
+  radius:
+    build:
+      context: ./
+      dockerfile: ./dockerfiles/radius.dockerfile
+    network_mode: host
+    ports:
+      - 18120:18120/udp
+      - 18120:18120/tcp
+      - 1812:1812/udp
+      - 1812:1812/tcp
+      - 1813:1813/udp
+      - 1813:1813/tcp
+      - 64609:64609/udp
+      - 64609:64609/tcp
+      - 60225:60225/udp
+      - 60225:60225/tcp
+    volumes:
+      - "danish-data:/var/danish"
+      - "freeradius-crypto:/etc/radiusd-creds"
+      - "identity:/etc/dane_id"
+    restart: always
+    environment:
+      - DANISH_DATA=/var/danish
+      - DANE_ID=${DANE_ID}
+      - POLICY_FILE_DIR=/var/danish/
+      - TRUST_INFILE_PATH=/var/danish/policy.txt
+
+  maintenance:
+    build:
+      context: ./
+      dockerfile: ./dockerfiles/maintenance.dockerfile
+    volumes:
+      - "danish-data:/var/danish"
+      - "freeradius-crypto:/etc/radiusd-creds"
+      - "identity:/etc/dane_id"
+    restart: always
+    environment:
+      - POLICY_FILE_DIR=/var/danish/
+      - TRUST_INFILE_PATH=/var/danish/policy.txt
+
+  identity_manager:
+    image: ghcr.io/valimail/identity-manager
+    volumes:
+      - "identity:/etc/dane_id"
+    restart: always
+    environment:
+      - DANE_ID=${DANE_ID}
+
+  policy_manager:
+    image: ghcr.io/valimail/policy-sync
+    volumes:
+      - "danish-data:/var/valimail_policy"
+      - "freeradius-crypto:/etc/radiusd-creds"
+      - "identity:/etc/dane_id"
+    restart: always
+    environment:
+      - DANE_ID=${DANE_ID}
+      - POLICY_FILE_DIR=/var/valimail_policy/
+      - TRUST_INFILE_PATH=/var/valimail_policy/policy.txt
+
+volumes:
+  danish-data:
+  freeradius-crypto:
+  identity:

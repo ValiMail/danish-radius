@@ -1,0 +1,32 @@
+
+name: danish-radius
+type: sw.application
+description: >-
+  a RADIUS server configured to use DNS-bound client identity for EAP-TLS authentication.
+assets:
+  repository:
+    type: blob.asset
+    data:
+      url: 'https://github.com/valimail/danish-radius'
+  logo:
+    type: blob.asset
+    data:
+      url: >-
+        https://raw.githubusercontent.com/valimail/danish-radius/main/logo.png
+data:
+  applicationEnvironmentVariables:
+    - DANE_ID: ""
+    - RADIUS_ARGS: "-xf"
+    - POLICY_NAME: ""
+    - POLICY_URL: ""
+    - RADIUS_CLIENT_IP: "192.168.0.0"
+    - RADIUS_CLIENT_NETMASK: "16"
+    - RADIUS_CLIENT_SECRET: ""
+    - ROLES: "ssid1,ssid2"
+  defaultDeviceType: raspberrypi4-64
+  supportedDeviceTypes:
+    - raspberrypi3-64
+    - raspberrypi4-64
+    - fincm3
+    - intel-nuc
+version: 1.0.0

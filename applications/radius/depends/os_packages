@@ -1,0 +1,9 @@
+git
+build-essential
+openssl
+libssl-dev
+libffi-dev
+freeradius
+python3-pip
+gettext-base
+vim
