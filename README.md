@@ -26,7 +26,7 @@ The RADIUS server will accept a static access file (configured at `/var/danish/p
 
 1. Clone and configure this project for a Balena fleet.
 1. Flash a device with this fleet's firmware.
-1. Set the appropriate [environment variables](environment-variables)
+1. Set the appropriate [environment variables](#environment-variables)
 1. Generate the RADIUS server's identity according to [Identity Provisioning](#provisioning-identity)
 1. Configure either the Valimail policy server settings or the static policy file [Policy File](#policy-file)
 1. Set the SSIDs to be used for authentication in the `ROLES` environment variable. This setting is comma-separated and case-sensitive.
@@ -58,7 +58,7 @@ my-ssid|other._device.example
 another-ssid|some._device.example
 ```
 
-The string before the pipe character is the SSID name, and the string after the pipe character is the DNS name of the device which should be allowed to access the SSID.
+The string before the pipe character is the SSID name, and the string after the pipe character is the DNS name of the device which should be allowed to access the SSID. If deploying without the Valimail policy server integration, directly manage the `/var/danish/policy.txt` file.
 
 ## provisioning-identity
 
