@@ -4,7 +4,9 @@ RADIUS authentication server supporting EAP-TLS with DNS-based identities, imple
 
 ## What it does
 
-This is a proof-of-concept implementation of EAP-TLS on RADIUS, using DNS-based client identities. This allows any device with a DNS-based identity to be allowed network access based on name alone, independent of the private PKI used to sign the certificate.
+This is a proof-of-concept implementation of EAP-TLS on RADIUS, using DNS-bound client identities. This allows any device with a DNS-based identity to be allowed network access based on name alone, independent of the private PKI used to sign the certificate.
+
+This project supports, but **does not require**, Valimail's policy engine for managing network access lists.
 
 ## Requirements
 
@@ -12,7 +14,7 @@ This is a proof-of-concept implementation of EAP-TLS on RADIUS, using DNS-based 
 
 Client devices must have certificates and trust anchors published according to <https://datatracker.ietf.org/doc/draft-wilson-dane-pkix-cd/>
 
-### Network infrastructure
+### Supporting infrastructure
 
 This RADIUS server can be used to support EAP-TLS authentication for wired or wireless networks.
 
@@ -24,16 +26,19 @@ The RADIUS server will accept a static access file (configured at `/var/danish/p
 
 [![balena deploy button](https://www.balena.io/deploy.svg)](https://dashboard.balena-cloud.com/deploy?repoUrl=https://github.com/valimail/danish-radius&tarballUrl=https://github.com/ValiMail/danish-radius/archive/refs/heads/main.zip)
 
-1. Clone and configure this project for a Balena fleet.
+1. Configure this project for a Balena fleet.
 1. Flash a device with this fleet's firmware.
 1. Set the appropriate [environment variables](#environment-variables)
 1. Generate the RADIUS server's identity according to [Identity Provisioning](#provisioning-identity)
 1. Configure either the Valimail policy server settings or the static policy file [Policy File](#policy-file)
 1. Set the SSIDs to be used for authentication in the `ROLES` environment variable. This setting is comma-separated and case-sensitive.
 
+Finally, publish your client device certificates in DNS, following the pattern described here: <https://datatracker.ietf.org/doc/draft-wilson-dane-pkix-cd/>
+
+
 ## policy-file
 
-The policy file is located at `/var/danish/policy.json` and is used to create the SSID to DNS name mapping at `/var/danish/policy.txt`, which is periodically checked by the `maintenance` container application and used to compose the `/var/danish/trust_map.json` file. The `/var/danish/trust_map.json` file is used as a part of the authorization process to prevent cross-domain signing with multiple private PKIs (namespace enforcement).
+The policy file from the Valimail policy engine can be found at `/var/danish/policy.json` and is used to create the SSID to DNS name mapping in `/var/danish/policy.txt`, which is periodically checked by the `maintenance` container application and used to compose the `/var/danish/trust_map.json` file. The `/var/danish/trust_map.json` file is used as a part of the authorization process to prevent cross-domain signing with multiple private PKIs (namespace enforcement).
 
 The `/var/danish/policy.json` is structured like this:
 
@@ -94,3 +99,8 @@ dane_discovery_get_ca_certificates --output_path /identity/cadir/${DANE_ID}ca.ce
 | RADIUS_CLIENT_NETMASK | This is the netmask for the `RADIUS_CLIENT_IP`.                                                                 |
 | RADIUS_CLIENT_SECRET  | This is the shared secret for RADIUS.                                                                           |
 | ROLES                 | This is a comma-separated list of SSIDs that can be found in the policy file, represented as roles.             |
+
+
+# Licenses
+
+* This repository contains build instructions for, and configuration files adapted from, the FreeRADIUS RADIUS server, which is GPL-licensed. <https://github.com/FreeRADIUS/freeradius-server/blob/master/LICENSE>

@@ -1,1 +1,1 @@
-git+git://github.com/ValiMail/RADIUS-PKIX-CD@v0.8#radius_pkix_cd
+git+git://github.com/ValiMail/RADIUS-PKIX-CD@v0.9#radius_pkix_cd
