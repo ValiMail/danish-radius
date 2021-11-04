@@ -30,9 +30,5 @@ RUN pip3 install -r /install/depends/requirements.txt
 RUN which pkix_cd_verify
 RUN which pkix_cd_manage_trust
 RUN mkdir /etc/freeradius-conf-cache/
-# COPY ${CONFIG_DIR}/default /etc/freeradius/3.0/sites-enabled/
-# COPY ${CONFIG_DIR}/eap-tls /etc/eap-tls.orig
-# COPY ${CONFIG_DIR}/clients.conf /etc/clients.conf.orig
 COPY ${CONFIG_DIR} /etc/freeradius-conf-cache
 CMD /application.sh
-# CMD balena-idle

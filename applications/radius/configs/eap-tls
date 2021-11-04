@@ -405,8 +405,7 @@ eap {
 			#  deleted by the server when the command
 			#  returns.
             # THIS IS WHERE WE COMPARE DANE_ID AGAINST AKI
-	#		client = "/path/to/openssl verify -CApath ${..ca_path} %{TLS-Client-Cert-Filename}"
-	        client = "/usr/local/bin/pkix_cd_verify --calling=%{User-Name} --called=%{Called-Station-Id} --certfile=%{TLS-Client-Cert-Filename} --trustmap=/var/danish/trust_map.json"
+	        client = "/usr/local/bin/pkix_cd_verify --calling=%{User-Name} --called=%{Called-Station-Id} --certfile=%{TLS-Client-Cert-Filename} --trustmap=/var/danish/trust_map.json ${PKIXCD_ADDITIONAL_ARGS}"
 		}
     }
 
