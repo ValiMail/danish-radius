@@ -1,11 +1,20 @@
 #!/bin/bash
 
+export PKIXCD_ADDITIONAL_ARGS=""
+
+if [[ -z "${REQUIRE_IOT_REGISTRY}" ]]; then
+  echo "Not requiring IoT registry for client certificates."  
+else
+  export PKIXCD_ADDITIONAL_ARGS=" --require-registry"
+  echo "Setting IoT Registry requirement."
+fi
+
 # Start the RADIUS server
 mkdir -p /tmp/radiusd
 sudo chown freerad:freerad /tmp/radiusd 
 cd /etc/freeradius/3.0/sites-enabled/ && ls | xargs -n 1 unlink
 cd /etc/freeradius/3.0/mods-enabled/ && ls | xargs -n 1 unlink 
-cat /etc/freeradius-conf-cache/eap-tls | envsubst '${DANE_ID}' > /etc/freeradius/3.0/mods-enabled/eap-tls
+cat /etc/freeradius-conf-cache/eap-tls | envsubst '${DANE_ID},${PKIXCD_ADDITIONAL_ARGS}' > /etc/freeradius/3.0/mods-enabled/eap-tls
 cat /etc/freeradius-conf-cache/clients.conf | envsubst > /etc/freeradius/3.0/clients.conf
 cp /etc/freeradius-conf-cache/default /etc/freeradius/3.0/sites-enabled
 cp /etc/freeradius-conf-cache/default /etc/freeradius/3.0/sites-enabled

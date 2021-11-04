@@ -89,17 +89,17 @@ dane_discovery_get_ca_certificates --output_path /identity/cadir/${DANE_ID}ca.ce
 
 ## environment-variables
 
-| Variable name         | Purpose                                                                                                         |
-|-----------------------|-----------------------------------------------------------------------------------------------------------------|
-| DANE_ID               | This is the DANE name of this RADIUS server.                                                                    |
-| POLICY_NAME           | This is the name of the policy as configured in Valimail's policy system.                                       |
-| POLICY_URL            | This is the URL of the policy server.                                                                           |
-| RADIUS_ARGS           | Set this to `-xf`.                                                                                              |
-| RADIUS_CLIENT_IP      | This is the IP address (or subnet) of network devices which will be passing EAP messages to this RADIUS server. |
-| RADIUS_CLIENT_NETMASK | This is the netmask for the `RADIUS_CLIENT_IP`.                                                                 |
-| RADIUS_CLIENT_SECRET  | This is the shared secret for RADIUS.                                                                           |
-| ROLES                 | This is a comma-separated list of SSIDs that can be found in the policy file, represented as roles.             |
-
+| Variable name         | Purpose                                                                                                                   |
+|-----------------------|---------------------------------------------------------------------------------------------------------------------------|
+| DANE_ID               | This is the DANE name of this RADIUS server.                                                                              |
+| POLICY_NAME           | This is the name of the policy as configured in Valimail's policy system.                                                 |
+| POLICY_URL            | This is the URL of the policy server.                                                                                     |
+| RADIUS_ARGS           | Set this to `-xf`.                                                                                                        |
+| RADIUS_CLIENT_IP      | This is the IP address (or subnet) of network devices which will be passing EAP messages to this RADIUS server.           |
+| RADIUS_CLIENT_NETMASK | This is the netmask for the `RADIUS_CLIENT_IP`.                                                                           |
+| RADIUS_CLIENT_SECRET  | This is the shared secret for RADIUS.                                                                                     |
+| ROLES                 | This is a comma-separated list of SSIDs that can be found in the policy file, represented as roles.                       |
+| REQUIRE_IOT_REGISTRY  | Require all clients certificates to be issued by the IoT Registry (https://www.cira.ca/labs/projects/secure-iot-registry) |
 
 # Licenses
 
