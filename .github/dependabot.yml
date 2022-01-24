@@ -13,7 +13,7 @@ updates:
     timezone: America/Los_Angeles
   open-pull-requests-limit: 99
   reviewers:
-  - ashdwilson
+  - acook
 
 - package-ecosystem: pip
   directory: "/applications/radius/depends/"
@@ -23,4 +23,4 @@ updates:
     timezone: America/Los_Angeles
   open-pull-requests-limit: 99
   reviewers:
-  - ashdwilson
+  - acook
